@@ -2,6 +2,7 @@ package com.example.alber.juegoescritura;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v4.view.ViewCompat;
 import android.widget.Button;
 
@@ -18,6 +19,8 @@ public class Ejercicio {
     int renPos; //Se utiliza para definir aleatoriamente la posición en y (renglones) en donde se empezará la palabra dentro de la matríz de botones.
     int colPos; //Se utiliza para definir aleatoriamente la posición en x (columnas) en donde se empezará la palabra dentro de la matríz de botones.
     int direccion; //Variable que defina en qué dirección y sentido aleatorio se escribe la palabra (horizontal y a la derecha o vertical y hacia abajo).
+    MediaPlayer audio;
+
 
     //Maneja el color del botón btn.
     public void setButtonColor(Button btn, int buttonCase){

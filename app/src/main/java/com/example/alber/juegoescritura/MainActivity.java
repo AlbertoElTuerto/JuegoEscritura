@@ -1,6 +1,7 @@
 package com.example.alber.juegoescritura;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    int numEjercicios = 20; //Numero de ejercicios (20).
+    int numEjercicios = 28; //Numero de ejercicios (28).
     int currentExercise = 0; //Contador utilizado para determinar la palabra, audio del ejercicio stepSize (suma de puntos por letra acertada) para el puntaje.
     String[] palabras = new String[numEjercicios]; //Arreglo de Strings/palabras (de cada ejercicio) del juego "Sopa de Letras".
     float[] puntaje = new float[numEjercicios]; //Arreglo de floats utilizado para guardar el punaje más alto en cada ejercicio.
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     int direccion; //Variable que especifica (definida por la interacción del usuario con la aplicación) el sentido (y dirección) en la que el usuario está "encontrando" la palabra dentro de la matriz de botones del activity_main.xml (si es 0, el sentido es vertical | si es 1, el sentido es horizontal).
     int a; //Índice al que se le asigna la posición en renglones del botón presionado en el activity_main.xml.
     int b; //Índice al que se le asigna la posición en columnas del botón presionado en el activity_main.xml.
+    MediaPlayer audio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,53 +47,69 @@ public class MainActivity extends AppCompatActivity {
         final TextView textViewWord = (TextView) findViewById(R.id.textViewWord); //Asignación del "TextViewWord" (TextView) a un objeto en el MainActivity.java llamado "textViewWord".
         final RatingBar estrellas = (RatingBar) findViewById(R.id.pointsBar); //Asignación del "pointsBar" (RatingBar) a un objeto en el MainActivity.java llamado "estrellas".
         final TextView pointProof = (TextView) findViewById(R.id.pointProof); //(BORRAR) Utilizado para mostrar que se esté guardadno la puntuación de manera correcta.
-        //final MediaPlayer audio = MediaPlayer.create(this, audios[currentExercise]);
+        pointProof.setVisibility(View.GONE); //
 
         //---------- PALABRAS ---------- (Definición de las palabras a utilizar en los ejercicios)//
 
         palabras[0] = "río";
         palabras[1] = "mar";
-        palabras[2] = "pino";
-        palabras[3] = "pozo";
-        palabras[4] = "lago";
-        palabras[5] = "pato";
-        palabras[6] = "león";
-        palabras[7] = "bote";
-        palabras[8] = "perro";
-        palabras[9] = "pasto";
-        palabras[10] = "oveja";
-        palabras[11] = "cielo";
-        palabras[12] = "avión";
-        palabras[13] = "piedra";
-        palabras[14] = "conejo";
-        palabras[15] = "planta";
-        palabras[16] = "trueno";
-        palabras[17] = "granja";
-        palabras[18] = "volcán";
-        palabras[19] = "jirafa";
+        palabras[2] = "sol"; //
+        palabras[3] = "pez"; //
+        palabras[4] = "eco"; //
+        palabras[5] = "pie"; //
+        palabras[6] = "oro"; //
+        palabras[7] = "pino";
+        palabras[8] = "pozo";
+        palabras[9] = "lago";
+        palabras[10] = "pato";
+        palabras[11] = "león";
+        palabras[12] = "bote";
+        palabras[13] = "agua"; //
+        palabras[14] = "perro";
+        palabras[15] = "pasto";
+        palabras[16] = "oveja";
+        palabras[17] = "cielo";
+        palabras[18] = "avión";
+        palabras[19] = "cueva"; //
+        palabras[20] = "fruta";
+        palabras[21] = "piedra";
+        palabras[22] = "conejo";
+        palabras[23] = "planta";
+        palabras[24] = "trueno";
+        palabras[25] = "granja";
+        palabras[26] = "volcán";
+        palabras[27] = "jirafa";
 
         //---------- AUDIOS ---------- (Grabaciones de las palabras correspondientes para los ejercicios)
 
         audios[0] = R.raw.rio;
         audios[1] = R.raw.mar;
-        audios[2] = R.raw.pino;
-        audios[3] = R.raw.pozo;
-        audios[4] = R.raw.lago;
-        audios[5] = R.raw.pato;
-        audios[6] = R.raw.leon;
-        audios[7] = R.raw.bote;
-        audios[8] = R.raw.perro;
-        audios[9] = R.raw.pasto;
-        audios[10] = R.raw.oveja;
-        audios[11] = R.raw.cielo;
-        audios[12] = R.raw.avion;
-        audios[13] = R.raw.piedra;
-        audios[14] = R.raw.conejo;
-        audios[15] = R.raw.planta;
-        audios[16] = R.raw.trueno;
-        audios[17] = R.raw.granja;
-        audios[18] = R.raw.volcan;
-        audios[19] = R.raw.jirafa;
+        audios[2] = R.raw.sol;
+        audios[3] = R.raw.pez;
+        audios[4] = R.raw.eco;
+        audios[5] = R.raw.pie;
+        audios[6] = R.raw.oro;
+        audios[7] = R.raw.pino;
+        audios[8] = R.raw.pozo;
+        audios[9] = R.raw.lago;
+        audios[10] = R.raw.pato;
+        audios[11] = R.raw.leon;
+        audios[12] = R.raw.bote;
+        audios[13] = R.raw.agua;
+        audios[14] = R.raw.perro;
+        audios[15] = R.raw.pasto;
+        audios[16] = R.raw.oveja;
+        audios[17] = R.raw.cielo;
+        audios[18] = R.raw.avion;
+        audios[19] = R.raw.cueva;
+        audios[20] = R.raw.fruta;
+        audios[21] = R.raw.piedra;
+        audios[22] = R.raw.conejo;
+        audios[23] = R.raw.planta;
+        audios[24] = R.raw.trueno;
+        audios[25] = R.raw.granja;
+        audios[26] = R.raw.volcan;
+        audios[27] = R.raw.jirafa;
 
         //---------- PALABRA DEL EJERCICIO ----------//
 
@@ -253,6 +271,9 @@ public class MainActivity extends AppCompatActivity {
                                             coloredText.clearSpans();                                               //
                                             coloredText.setSpan(verde, 0, palabras[currentExercise].length(), 0);   //...y se cambia de color (a VERDE) las letras de toda la palabra (dentro del TextView "textViewWord").
                                             textViewWord.setText(coloredText);                                      //
+                                            audio.release();
+                                            audio = MediaPlayer.create(MainActivity.this, audios[currentExercise]);
+                                            audio.start();
                                             //POSIBLE interacción para pasar al siguiente ejercicio...
                                         }
                                     } else { //Si la palabra sigue sin construirse por completo...
@@ -356,6 +377,8 @@ public class MainActivity extends AppCompatActivity {
         //----------Primer ejercicio creado aleatoriamente (con el contador del ejercicio "currentExcercise" = 0)----------//
 
         ejercicio.setMatrix(palabras[currentExercise]);
+        audio = MediaPlayer.create(MainActivity.this, audios[currentExercise]);
+        audio.start();
 
         //---------- Botones NEXT, PREV, RETRY y AUDIO ----------//
         final Button btnNext = (Button) findViewById(R.id.btnNext);
@@ -398,7 +421,9 @@ public class MainActivity extends AppCompatActivity {
                 coloredText.clear();
                 coloredText.append(palabras[currentExercise]);
                 textViewWord.setText(coloredText);
-                //audio = MediaPlayer.create(this, audios[currentExercise]);
+                audio.release();
+                audio = MediaPlayer.create(MainActivity.this, audios[currentExercise]);
+                audio.start();
                 ejercicio.setMatrix(palabras[currentExercise]);
                 btnPrev.setEnabled(true);
                 btnPrev.setVisibility(View.VISIBLE);
@@ -430,6 +455,9 @@ public class MainActivity extends AppCompatActivity {
                 coloredText.clear();
                 coloredText.append(palabras[currentExercise]);
                 textViewWord.setText(coloredText);
+                audio.release();
+                audio = MediaPlayer.create(MainActivity.this, audios[currentExercise]);
+                audio.start();
                 ejercicio.setMatrix(palabras[currentExercise]);
                 btnNext.setEnabled(true);
                 btnNext.setVisibility(View.VISIBLE);
@@ -457,23 +485,25 @@ public class MainActivity extends AppCompatActivity {
 
         //----------Audio----------(Interacción)//
 
-        /*btnAudio.setOnClickListener(new View.OnClickListener() {
+        btnAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                audio.release();
+                audio = MediaPlayer.create(MainActivity.this, audios[currentExercise]);
                 audio.start();
             }
-        });*/
+        });
 
-        //--------------------------(CORREGIR Interacción del Audio)
+        //--------------------------
 
         //----------Prueba del guardado de puntos por ejercicio (BORRAR)----------//
 
-        pointProof.setOnClickListener(new View.OnClickListener() {
+        /*pointProof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pointProof.setText(Float.toString(puntaje[currentExercise]));
             }
-        });
+        });*/
 
     } //Fin del onCreate
 } //Fin del MainActivity
